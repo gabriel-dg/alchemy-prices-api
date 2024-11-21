@@ -39,7 +39,7 @@ A modern web application demonstrating the usage of Alchemy's Price API endpoint
 
 1. Clone the repository: 
 ```bash
-git clone https://github.com/yourusername/alchemy-prices-demo.git
+git clone https://github.com/gabriel-dg/alchemy-prices-api
 cd alchemy-prices-demo
 ```
 
