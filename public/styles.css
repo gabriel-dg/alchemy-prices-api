@@ -1,0 +1,736 @@
+:root {
+    --bg-primary: #0a0b14;
+    --bg-secondary: #1a1b2e;
+    --accent-primary: #4f6ef7;
+    --accent-secondary: #6c8eff;
+    --text-primary: #b4bcd0;
+    --text-secondary: #8892b0;
+    --neon-blue: #4f6ef7;
+    --neon-purple: #a537fd;
+    --component-bg: rgba(20, 21, 38, 0.6);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 30px;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    min-height: 100vh;
+    color: #b4bcd0;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #4f6ef7;
+    font-size: 3.2em;
+    margin-bottom: 1.5em;
+    text-shadow: 0 0 10px rgba(79,110,247,0.5),
+                 0 0 20px rgba(79,110,247,0.3),
+                 0 0 30px rgba(79,110,247,0.2);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.price-section {
+    background: var(--component-bg);
+    padding: 35px;
+    margin-bottom: 40px;
+    border-radius: 24px;
+    box-shadow: 0 0 20px rgba(79,110,247,0.1);
+    border: 1px solid rgba(79,110,247,0.2);
+    position: relative;
+}
+
+.price-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    pointer-events: none;
+    box-shadow: inset 0 0 20px rgba(79,110,247,0.1);
+}
+
+h2 {
+    margin-top: 0;
+    color: var(--accent-secondary);
+    font-size: 2.2em;
+    border-bottom: 2px solid rgba(79,110,247,0.2);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(79,110,247,0.4);
+}
+
+.form-group {
+    background: rgba(13, 14, 25, 0.4);
+    border: 1px solid rgba(79,110,247,0.2);
+    box-shadow: 0 0 20px rgba(79,110,247,0.1);
+    padding: 25px;
+    margin: 20px 0;
+}
+
+.form-group::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    pointer-events: none;
+    box-shadow: inset 0 0 30px rgba(79,110,247,0.05);
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-bottom: 20px;
+    align-items: end;
+}
+
+.input-row.symbol-row {
+    grid-template-columns: minmax(200px, 300px);
+    justify-content: start;
+}
+
+.input-row.date-interval-row {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-group label {
+    font-size: 16px;
+    color: #8892b0;
+    font-weight: 500;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(79,110,247,0.2);
+}
+
+.input-group input,
+.input-group select,
+#symbolInput,
+.network-select,
+.address-input {
+    height: 54px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-family: inherit;
+    background: rgba(13, 14, 25, 0.6);
+    border: 1px solid rgba(79,110,247,0.3);
+    color: var(--text-primary);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+#historicalSymbol {
+    max-width: 300px;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+#symbolInput:focus {
+    background: rgba(20, 21, 38, 0.8);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(79,110,247,0.3);
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+    color: white;
+    padding: 16px 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(79,110,247,0.3);
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+button:hover {
+    background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(79,110,247,0.5);
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+.price-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 25px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.price-header {
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    padding: 20px 30px;
+    background: rgba(79,110,247,0.15);
+    font-weight: 600;
+    color: #4f6ef7;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(79,110,247,0.3);
+}
+
+.price-card {
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    align-items: center;
+    padding: 20px 30px;
+    background: rgba(30, 31, 58, 0.4);
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(79,110,247,0.1);
+}
+
+.price-card:hover {
+    background: rgba(79,110,247,0.1);
+}
+
+.token-symbol {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.token-price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #4f6ef7;
+    text-shadow: 0 0 10px rgba(79,110,247,0.5);
+}
+
+.token-update {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+}
+
+/* Historical table styles */
+.historical-data {
+    background: var(--component-bg);
+    border-radius: 16px;
+    padding: 25px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.historical-data h3 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.historical-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 16px;
+}
+
+.historical-table th,
+.historical-table td {
+    padding: 8px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    line-height: 1.2;
+}
+
+.historical-table th {
+    background: rgba(79,110,247,0.15);
+    color: #4f6ef7;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-shadow: 0 0 10px rgba(79,110,247,0.3);
+}
+
+.historical-table td {
+    font-size: 15px;
+    color: rgba(255,255,255,0.9);
+}
+
+.historical-table td:nth-child(2) {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 16px;
+    text-shadow: 0 0 20px rgba(79,110,247,0.3);
+}
+
+.historical-table tr:hover td {
+    background: rgba(255,255,255,0.05);
+}
+
+.historical-table td.positive {
+    color: #00f5d4;
+}
+
+.historical-table td.negative {
+    color: #ff6b6b;
+}
+
+.error-message {
+    color: #ff6b6b;
+    padding: 15px;
+    background: rgba(255,107,107,0.1);
+    border-radius: 12px;
+    margin-top: 15px;
+    font-size: 16px;
+    border: 1px solid rgba(255,107,107,0.2);
+}
+
+/* Update address input group styles */
+.address-input-group {
+    display: grid;
+    grid-template-columns: 220px minmax(300px, 1fr) 150px;
+    gap: 20px;
+    align-items: center;
+}
+
+.network-select,
+.address-input {
+    height: 54px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 18px;
+    background: rgba(13, 14, 25, 0.6);
+    border: 1px solid rgba(79,110,247,0.3);
+    color: var(--text-primary);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.network-select:hover,
+.address-input:hover {
+    border-color: rgba(79,110,247,0.5);
+    box-shadow: 0 0 10px rgba(79,110,247,0.2);
+}
+
+.network-select:focus,
+.address-input:focus {
+    background: rgba(20, 21, 38, 0.8);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(79,110,247,0.3);
+    outline: none;
+}
+
+.add-button {
+    height: 54px;
+    padding: 0;
+    width: 150px;
+    font-size: 15px;
+    white-space: nowrap;
+    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(79,110,247,0.3);
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+.add-button:hover {
+    background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(79,110,247,0.5);
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+/* Update address list styles */
+.address-list {
+    margin-top: 20px;
+}
+
+.address-item {
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    gap: 15px;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(30, 31, 58, 0.4);
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.address-item .network {
+    font-size: 16px;
+    color: #4f6ef7;
+    font-weight: 500;
+}
+
+.address-item .address {
+    font-family: monospace;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.remove-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+    padding: 8px 16px;
+    font-size: 14px;
+    height: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.remove-button:hover {
+    background: linear-gradient(135deg, #ee5253 0%, #dd4444 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+}
+
+/* Update select options color */
+select option {
+    background-color: rgba(13, 14, 25, 0.95);
+    color: var(--text-primary);
+    padding: 12px;
+    font-size: 18px;
+}
+
+/* Improve input placeholder colors */
+input::placeholder,
+select::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 18px;
+}
+
+/* Improve select text color when focused/active */
+select:focus,
+select:active {
+    color: #ffffff;
+    background: rgba(255,255,255,0.1);
+}
+
+/* Improve datetime input color */
+input[type="datetime-local"] {
+    color: var(--text-primary);
+    background: rgba(13, 14, 25, 0.6);
+    font-size: 18px;
+    padding-right: 30px;
+}
+
+/* Improve datetime input calendar icon */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* Update token address style for better readability */
+.token-address {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+    color: #4f6ef7;
+    background: rgba(79,110,247,0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Update network label style */
+.token-network {
+    color: #00f5d4;
+    font-weight: 500;
+}
+
+/* Update price colors for better contrast */
+.token-price {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(79,110,247,0.3);
+}
+
+/* Update historical table styles for better readability */
+.historical-table td {
+    color: rgba(255,255,255,0.9);
+}
+
+.historical-table td:nth-child(2) {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(79,110,247,0.3);
+}
+
+/* Update form labels for better visibility */
+.input-group label {
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+}
+
+/* Update select background when dropdown is open */
+select:focus {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Add hover effect to input fields */
+.input-group input:hover,
+.input-group select:hover,
+#symbolInput:hover {
+    border-color: rgba(255,255,255,0.3);
+    box-shadow: 0 0 10px rgba(79,110,247,0.2);
+}
+
+/* Update address list item styles */
+.address-item {
+    background: rgba(30, 31, 58, 0.4);
+}
+
+.address-item:hover {
+    background: rgba(30, 31, 58, 0.6);
+}
+
+/* Update error message for better visibility */
+.error-message {
+    background: rgba(255,107,107,0.15);
+    border-color: rgba(255,107,107,0.3);
+}
+
+/* Add a subtle text shadow to headings for better readability */
+h1, h2, h3 {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Update price header for better contrast */
+.price-header {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.95);
+    font-weight: 700;
+}
+
+/* Update historical data header */
+.historical-data h3 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+/* Add subtle transition to all interactive elements */
+input, select, button {
+    transition: all 0.2s ease;
+}
+
+/* Update table header style */
+.historical-table th {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.95);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Update positive/negative values */
+.positive {
+    color: #00f5d4 !important;
+    text-shadow: 0 0 10px rgba(0,245,212,0.5);
+}
+
+.negative {
+    color: #ff6b6b !important;
+    text-shadow: 0 0 10px rgba(255,107,107,0.5);
+}
+
+/* Add these styles for pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding: 12px 15px;
+    background: rgba(30, 31, 58, 0.4);
+    border-radius: 12px;
+}
+
+.pagination-info {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.pagination-button {
+    background: rgba(79,110,247,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background: rgba(79,110,247,0.3);
+    transform: translateY(-1px);
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Update table container styles */
+.table-container {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+/* Update historical table styles */
+.historical-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 16px;
+}
+
+.historical-table th,
+.historical-table td {
+    padding: 8px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    line-height: 1.2;
+}
+
+/* Remove scrollbar styles since we don't need them anymore */
+.table-container::-webkit-scrollbar,
+.table-container::-webkit-scrollbar-track,
+.table-container::-webkit-scrollbar-thumb,
+.table-container::-webkit-scrollbar-thumb:hover {
+    display: none;
+}
+
+/* Add these styles for tooltips */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(79,110,247,0.2);
+    padding-bottom: 15px;
+}
+
+.section-header h2 {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: help;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(79,110,247,0.2);
+}
+
+.tooltip:hover .tooltip-icon {
+    background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%);
+    box-shadow: 0 0 15px rgba(79,110,247,0.4);
+}
+
+.tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 10px);
+    background: rgba(0,0,0,0.95);
+    color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: normal;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.3s ease;
+    width: 280px;
+    text-align: left;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.95) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    bottom: calc(100% + 15px);
+}
+
+/* Update section header margin */
+.price-section h2 {
+    margin-bottom: 0;
+}
+
+/* Update spacing between button and results */
+.historical-data {
+    margin-top: 15px;
+}
+
+/* Update spacing for all result sections */
+.results {
+    margin-top: 15px;
+}
+ 
