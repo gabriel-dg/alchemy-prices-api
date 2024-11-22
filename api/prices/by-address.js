@@ -1,12 +1,11 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
-    if (req.method !== 'GET') {
+    if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const symbols = req.query.symbols?.split(',') || ['ETH', 'BTC', 'USDT'];
         const apiKey = process.env.ALCHEMY_API_KEY;
         
         if (!apiKey) {
@@ -14,19 +13,17 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'API key configuration error' });
         }
 
-        const baseUrl = `https://api.g.alchemy.com/prices/v1/${apiKey}/tokens/by-symbol`;
+        const baseUrl = `https://api.g.alchemy.com/prices/v1/${apiKey}/tokens/by-address`;
         
-        const params = new URLSearchParams();
-        symbols.forEach(symbol => params.append('symbols', symbol));
-        
-        console.log('Making request to:', `${baseUrl}?${params.toString()}`);
+        console.log('Making request to:', baseUrl);
 
-        const response = await fetch(`${baseUrl}?${params.toString()}`, {
-            method: 'GET',
+        const response = await fetch(baseUrl, {
+            method: 'POST',
             headers: { 
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(req.body)
         });
         
         if (!response.ok) {
