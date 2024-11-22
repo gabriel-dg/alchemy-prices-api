@@ -10,7 +10,6 @@ export default async function handler(req, res) {
         const apiKey = process.env.ALCHEMY_API_KEY;
         
         if (!apiKey) {
-            console.error('ALCHEMY_API_KEY is not set');
             return res.status(500).json({ error: 'API key configuration error' });
         }
 
@@ -18,8 +17,6 @@ export default async function handler(req, res) {
         
         const params = new URLSearchParams();
         symbols.forEach(symbol => params.append('symbols', symbol));
-        
-        console.log('Making request to:', `${baseUrl}?${params.toString()}`);
 
         const response = await fetch(`${baseUrl}?${params.toString()}`, {
             method: 'GET',
@@ -31,21 +28,14 @@ export default async function handler(req, res) {
         
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Alchemy API Error:', {
-                status: response.status,
-                statusText: response.statusText,
-                error: errorText
-            });
             return res.status(response.status).json({ 
-                error: `Alchemy API error: ${response.status} ${response.statusText}`,
-                details: errorText
+                error: `API error: ${response.status}`
             });
         }
         
         const data = await response.json();
         return res.json(data);
     } catch (error) {
-        console.error('Server Error:', error);
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: 'Internal server error' });
     }
 } 

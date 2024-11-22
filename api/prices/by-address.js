@@ -15,8 +15,6 @@ export default async function handler(req, res) {
 
         const baseUrl = `https://api.g.alchemy.com/prices/v1/${apiKey}/tokens/by-address`;
         
-        console.log('Making request to:', baseUrl);
-
         const response = await fetch(baseUrl, {
             method: 'POST',
             headers: { 
