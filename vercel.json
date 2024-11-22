@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
     },
     {
@@ -12,8 +12,16 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "src": "/api/prices/by-symbol",
+      "dest": "/api/prices/by-symbol.js"
+    },
+    {
+      "src": "/api/prices/by-address",
+      "dest": "/api/prices/by-address.js"
+    },
+    {
+      "src": "/api/prices/historical",
+      "dest": "/api/prices/historical.js"
     },
     {
       "src": "/(.*)",
