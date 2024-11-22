@@ -4,10 +4,14 @@ A modern web application demonstrating the usage of Alchemy's Price API endpoint
 
 ![Alchemy Prices API Demo Screenshot](screenshot.png)
 
+🌐 [Live Demo](https://alchemy-prices-api.vercel.app)
+
 ## Features
 
 - **Price by Symbol**: Get current prices for multiple cryptocurrencies using their symbols
 - **Price by Address**: Fetch token prices using their contract addresses across different networks
+  - Supports Ethereum, Polygon, and Arbitrum networks
+  - Includes USDC contract address example (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
 - **Historical Prices**: View historical price data with customizable time ranges and intervals
 
 ## Technologies Used
@@ -21,6 +25,7 @@ A modern web application demonstrating the usage of Alchemy's Price API endpoint
 - **Backend**:
   - Node.js
   - Express.js
+  - Vercel Serverless Functions
   - node-fetch for API requests
 
 - **APIs**:
@@ -35,12 +40,12 @@ A modern web application demonstrating the usage of Alchemy's Price API endpoint
 - npm (Node Package Manager)
 - Alchemy API Key
 
-## Installation
+## Local Development
 
 1. Clone the repository: 
 ```bash
 git clone https://github.com/gabriel-dg/alchemy-prices-api
-cd alchemy-prices-demo
+cd alchemy-prices-api
 ```
 
 2. Install dependencies:
@@ -48,26 +53,33 @@ cd alchemy-prices-demo
 npm install
 ```
 
-
 3. Create a `.env` file in the root directory and add your Alchemy API key:
 ```bash
-ALCHEMY_API_KEY=<your-alchemy-api-key>
+ALCHEMY_API_KEY=your_alchemy_api_key_here
 ```
 
-
-4. Start the server:
+4. Start the development server:
 ```bash
-npm start
+npm run dev
 ```
 
 5. Open your browser and navigate to `http://localhost:3000`
 
 ## Project Structure
 
-- `public/`: Static files and frontend code
-- `server.js`: Node.js server setup with Express
-- `package.json`: Project dependencies and scripts
-
+```
+alchemy-prices-api/
+├── api/
+│   └── index.js          # Serverless API endpoints
+├── public/
+│   ├── index.html        # Main HTML file
+│   ├── styles.css        # Styles with neon theme
+│   └── app.js           # Frontend JavaScript
+├── vercel.json          # Vercel configuration
+├── package.json
+├── .env
+└── README.md
+```
 
 ## Features in Detail
 
@@ -79,6 +91,7 @@ npm start
 ### 2. Prices by Address
 - Fetch token prices using contract addresses
 - Support for multiple networks (Ethereum, Polygon, Arbitrum)
+- Includes example USDC contract address
 - Dynamic address list management with add/remove functionality
 
 ### 3. Historical Prices
@@ -87,30 +100,15 @@ npm start
 - Multiple interval options (1h, 1d, 1w)
 - Paginated results with 10 entries per page
 
-## Styling
+## Deployment
 
-The application features a modern cyberpunk/neon theme with:
-- Gradient backgrounds
-- Neon glow effects
-- Responsive design
-- Interactive hover states
-- Smooth animations
-- Dark mode optimized
+This project is deployed on Vercel. To deploy your own instance:
 
-## API Endpoints
-
-### GET `/api/prices/by-symbol`
-- Query params: `symbols` (comma-separated list)
-- Returns current prices for specified tokens
-
-### POST `/api/prices/by-address`
-- Body: Array of `{network, address}` objects
-- Returns prices for specified token addresses
-
-### POST `/api/prices/historical`
-- Body: `{symbol, startTime, endTime, interval}`
-- Returns historical price data
-
+1. Fork this repository
+2. Create a Vercel account
+3. Import your forked repository
+4. Add your `ALCHEMY_API_KEY` to the environment variables
+5. Deploy!
 
 ## Contributing
 
@@ -127,5 +125,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - [Alchemy](https://www.alchemy.com/) for providing the Price API
+- Vercel for hosting the application
 
 

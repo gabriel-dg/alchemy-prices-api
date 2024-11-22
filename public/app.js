@@ -388,4 +388,25 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById('startDate').value = startDate.toISOString().slice(0, 16);
     document.getElementById('endDate').value = endDate.toISOString().slice(0, 16);
-}); 
+});
+
+// Add this function
+function useDefaultAddress() {
+    const defaultAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // USDC on Ethereum
+    document.getElementById('addressInput').value = defaultAddress;
+    document.getElementById('networkSelect').value = 'eth-mainnet'; // Set network to Ethereum
+}
+
+// Add this function to handle common token selection
+function selectCommonToken() {
+    const select = document.getElementById('commonTokens');
+    const addressInput = document.getElementById('addressInput');
+    
+    if (select.value) {
+        addressInput.value = select.value;
+        // Reset the select after using it
+        setTimeout(() => {
+            select.value = "";
+        }, 100);
+    }
+} 

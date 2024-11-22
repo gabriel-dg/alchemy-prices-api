@@ -733,4 +733,119 @@ input, select, button {
 .results {
     margin-top: 15px;
 }
+
+/* Add styles for the input wrapper and tooltip */
+.input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.input-tooltip {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.address-input:focus + .input-tooltip {
+    opacity: 1;
+}
+
+/* Update address input group to accommodate the tooltip */
+.address-input-group {
+    margin-bottom: 30px;
+}
+
+/* Add styles for the use default button */
+.input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    gap: 10px;
+}
+
+.use-default-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    font-size: 12px;
+    background: rgba(79,110,247,0.2);
+    border: 1px solid rgba(79,110,247,0.3);
+    color: var(--accent-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.use-default-button:hover {
+    background: rgba(79,110,247,0.3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Update address input padding to accommodate the button */
+.address-input {
+    padding-right: 130px !important;
+}
+
+/* Update input wrapper for the new select */
+.input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Style for common tokens select */
+.common-tokens-select {
+    height: 54px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: rgba(13, 14, 25, 0.6);
+    border: 1px solid rgba(79,110,247,0.3);
+    color: var(--text-primary);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.common-tokens-select:hover {
+    border-color: rgba(79,110,247,0.5);
+    box-shadow: 0 0 10px rgba(79,110,247,0.2);
+}
+
+.common-tokens-select:focus {
+    background: rgba(20, 21, 38, 0.8);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(79,110,247,0.3);
+    outline: none;
+}
+
+/* Style for the options */
+.common-tokens-select option {
+    background-color: rgba(13, 14, 25, 0.95);
+    color: var(--text-primary);
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* Update address input styles */
+.address-input {
+    margin: 0;
+}
+
+/* Update address input group layout */
+.address-input-group {
+    display: grid;
+    grid-template-columns: 200px minmax(300px, 1fr) 150px;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 30px;
+}
  

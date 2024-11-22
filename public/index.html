@@ -44,7 +44,18 @@
                         <option value="polygon-mainnet">Polygon Mainnet</option>
                         <option value="arbitrum-mainnet">Arbitrum Mainnet</option>
                     </select>
-                    <input type="text" id="addressInput" placeholder="Enter token contract address (e.g., 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" class="address-input">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="addressInput" 
+                            placeholder="Enter token contract address" 
+                            class="address-input"
+                            value="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                            title="USDC contract address on Ethereum Mainnet">
+                        <div class="input-tooltip">
+                            Default: USDC contract address on Ethereum Mainnet
+                        </div>
+                    </div>
                     <button onclick="addAddress()" class="add-button">Add Address</button>
                 </div>
                 <div id="addressList" class="address-list"></div>
