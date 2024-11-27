@@ -1,110 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alchemy Prices API Demo</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Alchemy Prices API Demo</h1>
-        
-        <section class="price-section">
-            <div class="section-header">
-                <h2>Prices by Symbol</h2>
-                <div class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-text">
-                        Get current prices for multiple tokens using their symbols (e.g., BTC, ETH).
-                        Enter multiple symbols separated by commas.
-                    </span>
-                </div>
-            </div>
-            <input type="text" id="symbolInput" placeholder="Enter symbols (e.g., BTC,ETH,USDT)" value="ETH,BTC,USDT">
-            <button onclick="getPricesBySymbol()">Get Prices</button>
-            <div id="symbolResults" class="results"></div>
-        </section>
-
-        <section class="price-section">
-            <div class="section-header">
-                <h2>Prices by Address</h2>
-                <div class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-text">
-                        Get current prices for tokens using their contract addresses.
-                        Add multiple token addresses from different networks.
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="address-input-group">
-                    <select id="networkSelect" class="network-select">
-                        <option value="eth-mainnet">Ethereum Mainnet</option>
-                        <option value="polygon-mainnet">Polygon Mainnet</option>
-                        <option value="arbitrum-mainnet">Arbitrum Mainnet</option>
-                    </select>
-                    <div class="input-wrapper">
-                        <input 
-                            type="text" 
-                            id="addressInput" 
-                            placeholder="Enter token contract address" 
-                            class="address-input"
-                            value="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-                            title="USDC contract address on Ethereum Mainnet">
-                        <div class="input-tooltip">
-                            Default: USDC contract address on Ethereum Mainnet
-                        </div>
-                    </div>
-                    <button onclick="addAddress()" class="add-button">Add Address</button>
-                </div>
-                <div id="addressList" class="address-list"></div>
-            </div>
-            <button onclick="getPricesByAddress()" class="main-button">Get Prices</button>
-            <div id="addressResults" class="results"></div>
-        </section>
-
-        <section class="price-section">
-            <div class="section-header">
-                <h2>Historical Prices</h2>
-                <div class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-text">
-                        Get historical price data for a token with custom time ranges and intervals.
-                        Choose between hourly, daily, or weekly price points.
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-row symbol-row">
-                    <div class="input-group">
-                        <label for="historicalSymbol">Token Symbol</label>
-                        <input type="text" id="historicalSymbol" placeholder="e.g., ETH" value="ETH">
-                    </div>
-                </div>
-                <div class="input-row date-interval-row">
-                    <div class="input-group">
-                        <label for="startDate">Start Date</label>
-                        <input type="datetime-local" id="startDate">
-                    </div>
-                    <div class="input-group">
-                        <label for="endDate">End Date</label>
-                        <input type="datetime-local" id="endDate">
-                    </div>
-                    <div class="input-group">
-                        <label for="interval">Interval</label>
-                        <select id="interval">
-                            <option value="1h">1 Hour</option>
-                            <option value="1d" selected>1 Day</option>
-                            <option value="1w">1 Week</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <button onclick="getHistoricalPrices()" class="main-button">Get Historical Prices</button>
-            <div id="historicalResults" class="results"></div>
-        </section>
-    </div>
-    <script src="app.js"></script>
-</body>
-</html> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alchemy Prices API Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Alchemy Prices API Demo</h1>
+        
+        <section class="price-section">
+            <div class="section-header">
+                <h2>Prices by Symbol</h2>
+                <div class="tooltip">
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text">
+                        Get current prices for multiple tokens using their symbols (e.g., BTC, ETH).
+                        Enter multiple symbols separated by commas.
+                    </span>
+                </div>
+            </div>
+            <input type="text" id="symbolInput" placeholder="Enter symbols (e.g., BTC,ETH,USDT)" value="ETH,BTC,USDT">
+            <button onclick="getPricesBySymbol()">Get Prices</button>
+            <div id="symbolResults" class="results"></div>
+        </section>
+
+        <section class="price-section">
+            <div class="section-header">
+                <h2>Prices by Address</h2>
+                <div class="tooltip">
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text">
+                        Get current prices for tokens using their contract addresses.
+                        Add multiple token addresses from different networks.
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="address-input-group">
+                    <select id="networkSelect" class="network-select">
+                        <option value="eth-mainnet">Ethereum Mainnet</option>
+                        <option value="polygon-mainnet">Polygon Mainnet</option>
+                        <option value="arbitrum-mainnet">Arbitrum Mainnet</option>
+                    </select>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="addressInput" 
+                            placeholder="Enter token contract address" 
+                            class="address-input"
+                            value="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                            title="USDC contract address on Ethereum Mainnet">
+                        <div class="input-tooltip">
+                            Default: USDC contract address on Ethereum Mainnet
+                        </div>
+                    </div>
+                    <button onclick="addAddress()" class="add-button">Add Address</button>
+                </div>
+                <div id="addressList" class="address-list"></div>
+            </div>
+            <button onclick="getPricesByAddress()" class="main-button">Get Prices</button>
+            <div id="addressResults" class="results"></div>
+        </section>
+
+        <section class="price-section">
+            <div class="section-header">
+                <h2>Historical Prices</h2>
+                <div class="tooltip">
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text">
+                        Get historical price data for a token with custom time ranges and intervals.
+                        Choose between hourly, daily, or weekly price points.
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-row symbol-row">
+                    <div class="input-group">
+                        <label for="historicalSymbol">Token Symbol</label>
+                        <input type="text" id="historicalSymbol" placeholder="e.g., ETH" value="ETH">
+                    </div>
+                </div>
+                <div class="input-row date-interval-row">
+                    <div class="input-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="datetime-local" id="startDate">
+                    </div>
+                    <div class="input-group">
+                        <label for="endDate">End Date</label>
+                        <input type="datetime-local" id="endDate">
+                    </div>
+                    <div class="input-group">
+                        <label for="interval">Interval</label>
+                        <select id="interval">
+                            <option value="1h">1 Hour</option>
+                            <option value="1d" selected>1 Day</option>
+                            <option value="1w">1 Week</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button onclick="getHistoricalPrices()" class="main-button">Get Historical Prices</button>
+            <div id="historicalResults" class="results"></div>
+        </section>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html> 

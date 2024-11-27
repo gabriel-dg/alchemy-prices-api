@@ -314,6 +314,12 @@ async function getHistoricalPrices() {
     
     try {
         const symbol = document.getElementById('historicalSymbol').value.trim().toUpperCase();
+        let interval = document.getElementById('interval').value;
+        
+        // Convert 1w to 7d for API compatibility
+        if (interval === '1w') {
+            interval = '1d';
+        }
         
         if (!symbol) {
             document.getElementById('historicalResults').innerHTML = `
@@ -324,15 +330,12 @@ async function getHistoricalPrices() {
             return;
         }
 
-        // Simplify the request body structure to match working example
         const requestBody = {
             symbol: symbol,
             startTime: new Date(document.getElementById('startDate').value).toISOString(),
             endTime: new Date(document.getElementById('endDate').value).toISOString(),
-            interval: document.getElementById('interval').value
+            interval: interval
         };
-
-        console.log('Sending request:', requestBody);
 
         const response = await fetch('/api/prices/historical', {
             method: 'POST',
@@ -343,7 +346,6 @@ async function getHistoricalPrices() {
         });
 
         const data = await response.json();
-        console.log('Historical price data:', data);
         
         if (data.error) {
             document.getElementById('historicalResults').innerHTML = `
@@ -352,6 +354,11 @@ async function getHistoricalPrices() {
                 </div>
             `;
             return;
+        }
+
+        // If interval was 1w, filter the data to show weekly points
+        if (document.getElementById('interval').value === '1w') {
+            data.data = data.data.filter((_, index) => index % 7 === 0);
         }
 
         document.getElementById('historicalResults').innerHTML = formatHistoricalData(data);
