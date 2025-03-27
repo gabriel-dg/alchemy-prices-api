@@ -1,167 +1,168 @@
 async function getPricesBySymbol() {
-    try {
-        const symbols = document.getElementById('symbolInput').value;
-        const response = await fetch(`/api/prices/by-symbol?symbols=${symbols}`);
-        const data = await response.json();
-        
-        const resultsDiv = document.getElementById('symbolResults');
-        
-        if (data.error) {
-            resultsDiv.innerHTML = `
+  try {
+    const symbols = document.getElementById("symbolInput").value;
+    const response = await fetch(`/api/prices/by-symbol?symbols=${symbols}`);
+    const data = await response.json();
+
+    const resultsDiv = document.getElementById("symbolResults");
+
+    if (data.error) {
+      resultsDiv.innerHTML = `
                 <div class="error-message">
                     ${data.error}
                 </div>
             `;
-            return;
-        }
+      return;
+    }
 
-        console.log('Received data:', data);
+    console.log("Received data:", data);
 
-        const tokenData = data.data || [];
-        
-        if (!Array.isArray(tokenData) || tokenData.length === 0) {
-            resultsDiv.innerHTML = `
+    const tokenData = data.data || [];
+
+    if (!Array.isArray(tokenData) || tokenData.length === 0) {
+      resultsDiv.innerHTML = `
                 <div class="error-message">
                     No token data found
                 </div>
             `;
-            return;
-        }
+      return;
+    }
 
-        const priceContainer = document.createElement('div');
-        priceContainer.className = 'price-cards';
-        
-        // Add header
-        const header = document.createElement('div');
-        header.className = 'price-header';
-        header.innerHTML = `
+    const priceContainer = document.createElement("div");
+    priceContainer.className = "price-cards";
+
+    // Add header
+    const header = document.createElement("div");
+    header.className = "price-header";
+    header.innerHTML = `
             <div>Asset</div>
             <div>Price</div>
             <div>Last Updated</div>
         `;
-        priceContainer.appendChild(header);
-        
-        tokenData.forEach(token => {
-            if (token.error) {
-                console.error(`Error for ${token.symbol}:`, token.error);
-                return;
-            }
+    priceContainer.appendChild(header);
 
-            const currentPrice = token.prices?.[0]?.value 
-                ? parseFloat(token.prices[0].value) 
-                : null;
-            
-            if (currentPrice === null) return;
+    tokenData.forEach((token) => {
+      if (token.error) {
+        console.error(`Error for ${token.symbol}:`, token.error);
+        return;
+      }
 
-            const card = document.createElement('div');
-            card.className = 'price-card';
-            
-            // Format the date to be more concise
-            const updateDate = new Date(token.prices[0].lastUpdatedAt);
-            const formattedDate = updateDate.toLocaleString(undefined, {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+      const currentPrice = token.prices?.[0]?.value
+        ? parseFloat(token.prices[0].value)
+        : null;
 
-            card.innerHTML = `
+      if (currentPrice === null) return;
+
+      const card = document.createElement("div");
+      card.className = "price-card";
+
+      // Format the date to be more concise
+      const updateDate = new Date(token.prices[0].lastUpdatedAt);
+      const formattedDate = updateDate.toLocaleString(undefined, {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      card.innerHTML = `
                 <div class="token-symbol">${token.symbol}</div>
                 <div class="token-price">$${formatNumber(currentPrice)}</div>
                 <div class="token-update">${formattedDate}</div>
             `;
-            priceContainer.appendChild(card);
-        });
+      priceContainer.appendChild(card);
+    });
 
-        if (priceContainer.children.length <= 1) { // Only header exists
-            resultsDiv.innerHTML = `
+    if (priceContainer.children.length <= 1) {
+      // Only header exists
+      resultsDiv.innerHTML = `
                 <div class="error-message">
                     No valid price data found
                 </div>
             `;
-            return;
-        }
+      return;
+    }
 
-        resultsDiv.innerHTML = '';
-        resultsDiv.appendChild(priceContainer);
-    } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('symbolResults').innerHTML = `
+    resultsDiv.innerHTML = "";
+    resultsDiv.appendChild(priceContainer);
+  } catch (error) {
+    console.error("Error:", error);
+    document.getElementById("symbolResults").innerHTML = `
             <div class="error-message">
                 Error fetching data: ${error.message}
             </div>
         `;
-    }
+  }
 }
 
 // Global variable to store addresses
 let addressList = [];
 
 function addAddress() {
-    const network = document.getElementById('networkSelect').value;
-    const address = document.getElementById('addressInput').value.trim();
+  const network = document.getElementById("networkSelect").value;
+  const address = document.getElementById("addressInput").value.trim();
 
-    if (!address) {
-        alert('Please enter a valid address');
-        return;
-    }
+  if (!address) {
+    alert("Please enter a valid address");
+    return;
+  }
 
-    // Add to list
-    addressList.push({ network, address });
+  // Add to list
+  addressList.push({ network, address });
 
-    // Update UI
-    updateAddressList();
+  // Update UI
+  updateAddressList();
 
-    // Clear input
-    document.getElementById('addressInput').value = '';
+  // Clear input
+  document.getElementById("addressInput").value = "";
 }
 
 function updateAddressList() {
-    const listContainer = document.getElementById('addressList');
-    listContainer.innerHTML = '';
+  const listContainer = document.getElementById("addressList");
+  listContainer.innerHTML = "";
 
-    addressList.forEach((item, index) => {
-        const addressItem = document.createElement('div');
-        addressItem.className = 'address-item';
-        addressItem.innerHTML = `
+  addressList.forEach((item, index) => {
+    const addressItem = document.createElement("div");
+    addressItem.className = "address-item";
+    addressItem.innerHTML = `
             <span class="network">${item.network}</span>
             <span class="address">${item.address}</span>
             <button class="remove-button" onclick="removeAddress(${index})">Remove</button>
         `;
-        listContainer.appendChild(addressItem);
-    });
+    listContainer.appendChild(addressItem);
+  });
 }
 
 function removeAddress(index) {
-    addressList.splice(index, 1);
-    updateAddressList();
+  addressList.splice(index, 1);
+  updateAddressList();
 }
 
 async function getPricesByAddress() {
-    try {
-        if (addressList.length === 0) {
-            document.getElementById('addressResults').innerHTML = `
+  try {
+    if (addressList.length === 0) {
+      document.getElementById("addressResults").innerHTML = `
                 <div class="error-message">
                     Please add at least one token address
                 </div>
             `;
-            return;
-        }
+      return;
+    }
 
-        const response = await fetch('/api/prices/by-address', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ addresses: addressList })
-        });
+    const response = await fetch("/api/prices/by-address", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ addresses: addressList }),
+    });
 
-        const data = await response.json();
-        console.log('Address price data:', data); // Debug log
-        
-        // Create table for results
-        const resultsDiv = document.getElementById('addressResults');
-        let html = `
+    const data = await response.json();
+    console.log("Address price data:", data); // Debug log
+
+    // Create table for results
+    const resultsDiv = document.getElementById("addressResults");
+    let html = `
             <div class="price-cards">
                 <div class="price-header">
                     <div>Network</div>
@@ -170,36 +171,39 @@ async function getPricesByAddress() {
                 </div>
         `;
 
-        // Handle the API response structure
-        if (data.data && Array.isArray(data.data)) {
-            data.data.forEach(token => {
-                if (!token.error) {
-                    const price = token.prices?.[0]?.value 
-                        ? `$${formatNumber(parseFloat(token.prices[0].value))}` 
-                        : 'N/A';
-                    const network = addressList.find(a => a.address.toLowerCase() === token.address.toLowerCase())?.network || 'Unknown';
-                    
-                    html += `
+    // Handle the API response structure
+    if (data.data && Array.isArray(data.data)) {
+      data.data.forEach((token) => {
+        if (!token.error) {
+          const price = token.prices?.[0]?.value
+            ? `$${formatNumber(parseFloat(token.prices[0].value))}`
+            : "N/A";
+          const network =
+            addressList.find(
+              (a) => a.address.toLowerCase() === token.address.toLowerCase()
+            )?.network || "Unknown";
+
+          html += `
                         <div class="price-card">
                             <div class="token-network">${network}</div>
                             <div class="token-address">${token.address}</div>
                             <div class="token-price">${price}</div>
                         </div>
                     `;
-                }
-            });
         }
+      });
+    }
 
-        html += `</div>`;
-        resultsDiv.innerHTML = html;
-    } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('addressResults').innerHTML = `
+    html += `</div>`;
+    resultsDiv.innerHTML = html;
+  } catch (error) {
+    console.error("Error:", error);
+    document.getElementById("addressResults").innerHTML = `
             <div class="error-message">
                 Error fetching data: ${error.message}
             </div>
         `;
-    }
+  }
 }
 
 // Add these variables at the top of your file
@@ -209,52 +213,55 @@ let historicalDataCache = null;
 
 // Update the formatHistoricalData function
 function formatHistoricalData(data) {
-    if (!data || !data.data || data.data.length === 0) {
-        return '<div class="no-data">No historical data available</div>';
-    }
+  if (!data || !data.data || data.data.length === 0) {
+    return '<div class="no-data">No historical data available</div>';
+  }
 
-    // Cache the data for pagination
-    historicalDataCache = data;
-    currentPage = 1;
+  // Cache the data for pagination
+  historicalDataCache = data;
+  currentPage = 1;
 
-    return renderHistoricalPage();
+  return renderHistoricalPage();
 }
 
 function renderHistoricalPage() {
-    if (!historicalDataCache) return '';
+  if (!historicalDataCache) return "";
 
-    const data = historicalDataCache;
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const totalPages = Math.ceil(data.data.length / ITEMS_PER_PAGE);
+  const data = historicalDataCache;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const totalPages = Math.ceil(data.data.length / ITEMS_PER_PAGE);
 
-    const priceRows = data.data
-        .slice(startIndex, endIndex)
-        .map(pricePoint => {
-            const formattedPrice = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: data.currency?.toUpperCase() || 'USD'
-            }).format(parseFloat(pricePoint.value));
+  const priceRows = data.data
+    .slice(startIndex, endIndex)
+    .map((pricePoint) => {
+      const formattedPrice = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: data.currency?.toUpperCase() || "USD",
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 4,
+      }).format(parseFloat(pricePoint.value));
 
-            const date = new Date(pricePoint.timestamp);
-            const dateFormat = {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            };
+      const date = new Date(pricePoint.timestamp);
+      const dateFormat = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      };
 
-            const formattedDate = date.toLocaleString('en-US', dateFormat);
+      const formattedDate = date.toLocaleString("en-US", dateFormat);
 
-            return `<tr>
+      return `<tr>
                 <td>${formattedDate}</td>
                 <td>${formattedPrice}</td>
             </tr>`;
-        }).join('');
+    })
+    .join("");
 
-    return `
+  return `
         <div class="historical-data">
             <h3>${data.symbol} Historical Prices</h3>
             <div class="table-container">
@@ -272,20 +279,23 @@ function renderHistoricalPage() {
             </div>
             <div class="pagination">
                 <div class="pagination-info">
-                    Showing ${startIndex + 1}-${Math.min(endIndex, data.data.length)} 
+                    Showing ${startIndex + 1}-${Math.min(
+    endIndex,
+    data.data.length
+  )} 
                     of ${data.data.length} entries
                 </div>
                 <div class="pagination-controls">
                     <button 
                         class="pagination-button" 
                         onclick="changePage(-1)"
-                        ${currentPage === 1 ? 'disabled' : ''}>
+                        ${currentPage === 1 ? "disabled" : ""}>
                         Previous
                     </button>
                     <button 
                         class="pagination-button" 
                         onclick="changePage(1)"
-                        ${currentPage === totalPages ? 'disabled' : ''}>
+                        ${currentPage === totalPages ? "disabled" : ""}>
                         Next
                     </button>
                 </div>
@@ -295,125 +305,136 @@ function renderHistoricalPage() {
 
 // Add the changePage function
 function changePage(delta) {
-    if (!historicalDataCache) return;
+  if (!historicalDataCache) return;
 
-    const totalPages = Math.ceil(historicalDataCache.data.length / ITEMS_PER_PAGE);
-    const newPage = currentPage + delta;
+  const totalPages = Math.ceil(
+    historicalDataCache.data.length / ITEMS_PER_PAGE
+  );
+  const newPage = currentPage + delta;
 
-    if (newPage >= 1 && newPage <= totalPages) {
-        currentPage = newPage;
-        document.getElementById('historicalResults').innerHTML = renderHistoricalPage();
-    }
+  if (newPage >= 1 && newPage <= totalPages) {
+    currentPage = newPage;
+    document.getElementById("historicalResults").innerHTML =
+      renderHistoricalPage();
+  }
 }
 
 // Update the getHistoricalPrices function to reset pagination
 async function getHistoricalPrices() {
-    // Reset pagination when fetching new data
-    currentPage = 1;
-    historicalDataCache = null;
-    
-    try {
-        const symbol = document.getElementById('historicalSymbol').value.trim().toUpperCase();
-        let interval = document.getElementById('interval').value;
-        
-        // Convert 1w to 7d for API compatibility
-        if (interval === '1w') {
-            interval = '1d';
-        }
-        
-        if (!symbol) {
-            document.getElementById('historicalResults').innerHTML = `
+  // Reset pagination when fetching new data
+  currentPage = 1;
+  historicalDataCache = null;
+
+  try {
+    const symbol = document
+      .getElementById("historicalSymbol")
+      .value.trim()
+      .toUpperCase();
+    let interval = document.getElementById("interval").value;
+
+    // Convert 1w to 7d for API compatibility
+    if (interval === "1w") {
+      interval = "1d";
+    }
+
+    if (!symbol) {
+      document.getElementById("historicalResults").innerHTML = `
                 <div class="error-message">
                     Please enter a token symbol
                 </div>
             `;
-            return;
-        }
+      return;
+    }
 
-        const requestBody = {
-            symbol: symbol,
-            startTime: new Date(document.getElementById('startDate').value).toISOString(),
-            endTime: new Date(document.getElementById('endDate').value).toISOString(),
-            interval: interval
-        };
+    const requestBody = {
+      symbol: symbol,
+      startTime: new Date(
+        document.getElementById("startDate").value
+      ).toISOString(),
+      endTime: new Date(document.getElementById("endDate").value).toISOString(),
+      interval: interval,
+    };
 
-        const response = await fetch('/api/prices/historical', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
+    const response = await fetch("/api/prices/historical", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
 
-        const data = await response.json();
-        
-        if (data.error) {
-            document.getElementById('historicalResults').innerHTML = `
+    const data = await response.json();
+
+    if (data.error) {
+      document.getElementById("historicalResults").innerHTML = `
                 <div class="error-message">
                     ${data.error.message || data.error}
                 </div>
             `;
-            return;
-        }
+      return;
+    }
 
-        // If interval was 1w, filter the data to show weekly points
-        if (document.getElementById('interval').value === '1w') {
-            data.data = data.data.filter((_, index) => index % 7 === 0);
-        }
+    // If interval was 1w, filter the data to show weekly points
+    if (document.getElementById("interval").value === "1w") {
+      data.data = data.data.filter((_, index) => index % 7 === 0);
+    }
 
-        document.getElementById('historicalResults').innerHTML = formatHistoricalData(data);
-    } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('historicalResults').innerHTML = `
+    document.getElementById("historicalResults").innerHTML =
+      formatHistoricalData(data);
+  } catch (error) {
+    console.error("Error:", error);
+    document.getElementById("historicalResults").innerHTML = `
             <div class="error-message">
                 Error fetching historical data: ${error.message}
             </div>
         `;
-    }
+  }
 }
 
 // Helper function to format numbers (keep existing implementation)
 function formatNumber(num) {
-    if (num === undefined || num === null || isNaN(num)) return 'N/A';
-    
-    if (num >= 1e9) {
-        return (num / 1e9).toFixed(2) + 'B';
-    } else if (num >= 1e6) {
-        return (num / 1e6).toFixed(2) + 'M';
-    } else if (num >= 1e3) {
-        return (num / 1e3).toFixed(2) + 'K';
-    } else {
-        return num.toFixed(2);
-    }
+  if (num === undefined || num === null || isNaN(num)) return "N/A";
+
+  if (num >= 1e9) {
+    return (num / 1e9).toFixed(4) + "B";
+  } else if (num >= 1e6) {
+    return (num / 1e6).toFixed(4) + "M";
+  } else if (num >= 1e3) {
+    return (num / 1e3).toFixed(4) + "K";
+  } else {
+    return num.toFixed(4);
+  }
 }
 
 // Set default dates when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 7); // 7 days ago
-    
-    document.getElementById('startDate').value = startDate.toISOString().slice(0, 16);
-    document.getElementById('endDate').value = endDate.toISOString().slice(0, 16);
+document.addEventListener("DOMContentLoaded", () => {
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - 7); // 7 days ago
+
+  document.getElementById("startDate").value = startDate
+    .toISOString()
+    .slice(0, 16);
+  document.getElementById("endDate").value = endDate.toISOString().slice(0, 16);
 });
 
 // Add this function
 function useDefaultAddress() {
-    const defaultAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // USDC on Ethereum
-    document.getElementById('addressInput').value = defaultAddress;
-    document.getElementById('networkSelect').value = 'eth-mainnet'; // Set network to Ethereum
+  const defaultAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // USDC on Ethereum
+  document.getElementById("addressInput").value = defaultAddress;
+  document.getElementById("networkSelect").value = "eth-mainnet"; // Set network to Ethereum
 }
 
 // Add this function to handle common token selection
 function selectCommonToken() {
-    const select = document.getElementById('commonTokens');
-    const addressInput = document.getElementById('addressInput');
-    
-    if (select.value) {
-        addressInput.value = select.value;
-        // Reset the select after using it
-        setTimeout(() => {
-            select.value = "";
-        }, 100);
-    }
-} 
+  const select = document.getElementById("commonTokens");
+  const addressInput = document.getElementById("addressInput");
+
+  if (select.value) {
+    addressInput.value = select.value;
+    // Reset the select after using it
+    setTimeout(() => {
+      select.value = "";
+    }, 100);
+  }
+}
